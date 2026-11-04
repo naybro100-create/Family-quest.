@@ -1,1 +1,54 @@
-<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Family Quest V4</title><style>body{font-family:Arial;background:#0f172a;color:white;margin:0;padding:15px}h1{text-align:center}.card{background:#1e293b;border-radius:16px;padding:15px;margin:10px 0}button{background:#22c55e;color:white;border:0;border-radius:10px;padding:10px;margin:4px}input{padding:8px;border-radius:8px}.hidden{display:none}.hp{height:22px;background:#333;border-radius:11px;overflow:hidden}.fill{height:100%;background:#ef4444}.coin{color:gold}</style></head><body><h1>🎮 Family Quest V4</h1><div class='card'>Level <span id=lvl>1</span> | XP <span id=xp>0</span> | <span class='coin'>🪙</span> <span id=coins>0</span></div><div class='card'><h3>Games</h3><button onclick="show('math')">🧮 Math Monster</button><button onclick="show('memory')">🧠 Memory Match</button><button onclick="show('flags')">🌏 Flag Explorer</button><button onclick="show('rocket')">🚀 Rocket Maths</button><button onclick="show('spell')">🔤 Word Scramble</button></div><div id='math' class='card'><h2>👾 Math Monster Battle</h2><div class='hp'><div id='hp' class='fill' style='width:100%'></div></div><p>Monster HP: <span id='mhp'>100</span></p><p id='mq'></p><input id='ma'><button onclick='mathAttack()'>Attack</button><p id='mm'></p></div><div id='memory' class='card hidden'><h2>🧠 Memory Match</h2><p>Match the answer to 8 x 7</p><button onclick='mem(56)'>56</button><button onclick='mem(54)'>54</button><button onclick='mem(48)'>48</button><p id='memmsg'></p></div><div id='flags' class='card hidden'><h2>🌏 Flag Explorer</h2><p>🇯🇵 Which country?</p><button onclick='flag(true)'>Japan</button><button onclick='flag(false)'>China</button><button onclick='flag(false)'>Vietnam</button><p id='flagmsg'></p></div><div id='rocket' class='card hidden'><h2>🚀 Rocket Maths</h2><p id='rq'></p><input id='ra'><button onclick='rocket()'>Launch</button><p>Fuel: <span id='fuel'>0</span>%</p></div><div id='spell' class='card hidden'><h2>🔤 Word Scramble</h2><p>Unscramble: TNAHPELE</p><input id='sa'><button onclick='spell()'>Check</button><p id='smsg'></p></div><script>let xp=0,coins=0,hp=100,fuelLvl=0,a=7,b=8,ra=9,rb=6;function update(){xpEl.textContent=xp;coinsEl.textContent=coins;lvl.textContent=Math.floor(xp/100)+1;document.getElementById('mhp').textContent=hp;document.getElementById('hp').style.width=hp+'%';localStorage.setItem('fqv4',JSON.stringify({xp,coins,hp,fuelLvl}));}const save=localStorage.getItem('fqv4');if(save){let d=JSON.parse(save);xp=d.xp||0;coins=d.coins||0;hp=d.hp||100;fuelLvl=d.fuelLvl||0;}function reward(x,c){xp+=x;coins+=c;update();}function show(id){['math','memory','flags','rocket','spell'].forEach(x=>document.getElementById(x).classList.add('hidden'));document.getElementById(id).classList.remove('hidden');}mq.textContent=a+' x '+b+' = ?';rq.textContent=ra+' x '+rb+' = ?';function mathAttack(){if(Number(ma.value)==a*b){hp-=20;reward(15,5);mm.textContent='Hit!';if(hp<=0){reward(50,20);hp=100;mm.textContent='Monster Defeated! New Monster Appears!';}}else{mm.textContent='Miss!';}update();}function mem(v){if(v==56){reward(10,3);memmsg.textContent='Match!'}else memmsg.textContent='Try again';}function flag(ok){if(ok){reward(15,5);flagmsg.textContent='Correct!'}else flagmsg.textContent='Wrong';}function rocket(){if(Number(document.getElementById('ra').value)==ra*rb){fuelLvl+=20;reward(15,5);document.getElementById('fuel').textContent=fuelLvl;if(fuelLvl>=100){reward(50,20);fuelLvl=0;alert('🚀 Reached Space! Bonus XP');}}}function spell(){if(sa.value.toLowerCase()=='elephant'){reward(15,5);smsg.textContent='Correct!'}else smsg.textContent='Try again';}update();</script></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Family Quest V5</title>
+
+<style>
+body{
+    font-family:Arial,sans-serif;
+    background:#0f172a;
+    color:white;
+    margin:0;
+    padding:15px;
+}
+
+h1{
+    text-align:center;
+}
+
+.card{
+    background:#1e293b;
+    border-radius:16px;
+    padding:15px;
+    margin:10px 0;
+}
+
+button{
+    background:#22c55e;
+    color:white;
+    border:none;
+    border-radius:10px;
+    padding:10px;
+    margin:4px;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#16a34a;
+}
+
+input{
+    padding:8px;
+    border-radius:8px;
+    border:none;
+}
+
+.hidden{
+    display:none;
+}
+
+.hp{
+    height:22px;
+    background:#333
